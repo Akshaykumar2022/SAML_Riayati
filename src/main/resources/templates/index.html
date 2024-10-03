@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SSO Launcher</title>
+    <link rel="icon" type="image/x-icon" href="/logo.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 50%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-group input[readonly] {
+            cursor: not-allowed;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        .button-group button {
+            width: auto;
+            flex: 1;
+        }
+    </style>
+    <script>
+        function submitForm() {
+        var form = document.getElementById('ssoForm');
+        form.submit();
+    }
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>SSO Launcher</h1>
+
+    <div th:if="${errorMessage}" class="error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <form id="ssoForm" th:object="${ssoLauncherDto}"  method="POST" th:action="@{${ssoUrl}}">
+        <div class="form-group">
+            <label for="TOKEN">Token:</label>
+            <input type="text" id="TOKEN" th:field="*{TOKEN}" required />
+        </div>
+        <div class="form-group">
+            <label for="PATIENT_MRN">Patient MRN:</label>
+            <input type="text" id="PATIENT_MRN" th:field="*{PATIENT_MRN}" required />
+        </div>
+        <div class="form-group">
+            <label for="PATIENT_MRN_AUTHORITY">Patient MRN Authority:</label>
+            <input type="text" id="PATIENT_MRN_AUTHORITY" th:field="*{PATIENT_MRN_AUTHORITY}" required />
+        </div>
+        <div class="form-group">
+            <label for="CLINICIAN_ID">Clinician ID:</label>
+            <input type="text" id="CLINICIAN_ID" th:field="*{CLINICIAN_ID}" required />
+        </div>
+        <div class="form-group">
+            <label for="CLIENT_ID">Client ID:</label>
+            <input type="text" id="CLIENT_ID" th:field="*{CLIENT_ID}" readonly />
+        </div>
+        <input type="hidden" id="samlResponseInput" name="SAMLResponse" th:field="*{SAMLResponse}">
+        <div class="form-group button-group">
+            <button type="submit" onclick="submitForm(event)">Launch SSO</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

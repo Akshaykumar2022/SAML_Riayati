@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Redirecting...</title>
+  <script type="text/javascript">
+    function submitForm() {
+        var form = document.getElementById('redirectForm');
+        form.submit();
+    }
+  </script>
+</head>
+<body onload="submitForm()">
+<form id="redirectForm" method="POST" th:action="@{${ssoUrl}}">
+  <input type="hidden" name="TOKEN" th:value="${ssoLauncherDto.TOKEN}" />
+  <input type="hidden" name="PATIENT_MRN" th:value="${ssoLauncherDto.PATIENT_MRN}" />
+  <input type="hidden" name="PATIENT_MRN_AUTHORITY" th:value="${ssoLauncherDto.PATIENT_MRN_AUTHORITY}" />
+  <input type="hidden" name="CLINICIAN_ID" th:value="${ssoLauncherDto.CLINICIAN_ID}" />
+  <input type="hidden" name="CLIENT_ID" th:value="${ssoLauncherDto.CLIENT_ID}" />
+  <input type="hidden" name="SAMLResponse" th:value="${ssoLauncherDto.SAMLResponse}" />
+</form>
+</body>
+</html>
